@@ -1,0 +1,22 @@
+version: '3.1'
+services:
+  app:
+    build: .
+    ports:
+      - 80:80
+    volumes:
+      - .:/var/www/html
+  db:
+    image: mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_DATABASE: test
+    volumes:
+      - ./data/db.sql:/docker-entrypoint-initdb.d/1.sql
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    volumes:
+      - ./data/adminer/login-pass-less.php:/var/www/html/plugins-enabled/login-pass-less.php
